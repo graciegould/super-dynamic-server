@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/main.css';
+import App from './App';
 
-const App = () => <div className='test'>Welcome to you super dynamic boiler plate</div>;
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
