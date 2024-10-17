@@ -5,8 +5,6 @@ const autoprefixer = require('autoprefixer');
 // const sourcemaps = require('gulp-sourcemaps');
 const cleanCSS = require('gulp-clean-css');
 const { exec } = require('child_process');
-const fs = require('fs');
-const archiver = require('archiver');
 
 const paths = {
   scss: 'src/scss/**/*.scss',
@@ -40,44 +38,14 @@ gulp.task('serve', (done) => {
   });
 });
 
-
 // Task to build the project using Webpack
 gulp.task('build', (done) => {
   exec('npx webpack --mode production', (err, stdout, stderr) => {
     console.log(stdout);
     console.error(stderr);
-    if (err) {
-      done(err);
-    } else {
-      // Zip the build directory using archiver
-      const output = fs.createWriteStream('build.zip');
-      const archive = archiver('zip', {
-        zlib: { level: 9 } // Sets the compression level.
-      });
-
-      output.on('close', function() {
-        console.log(archive.pointer() + ' total bytes');
-        console.log('archiver has been finalized and the output file descriptor has closed.');
-        done();
-      });
-
-      archive.on('error', function(err) {
-        throw err;
-      });
-
-      archive.pipe(output);
-
-      archive.directory('build/', false);
-
-      archive.finalize();
-    }
+    done(err);
   });
 });
 
-// Task to clean the build.zip file before creating a new one
-gulp.task('clean-zip', () => {
-  return del(['build.zip']);
-});
-
-// Default task to clean and build
-gulp.task('default', gulp.series('clean-zip', 'build'));
+// Default task to serve and watch for changes
+gulp.task('default', gulp.parallel('serve', 'watch-scss'));
