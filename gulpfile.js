@@ -2,50 +2,91 @@ const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
-// const sourcemaps = require('gulp-sourcemaps');
 const cleanCSS = require('gulp-clean-css');
-const { exec } = require('child_process');
+const sourcemaps = require('gulp-sourcemaps'); // Use sourcemaps for dev
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
+const nodemon = require('gulp-nodemon');
+const fs = require('fs');
+const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const isProduction = process.env.NODE_ENV === 'production';
+const webpackConfig = isProduction
+  ? require('./config/prod.config.js')
+  : require('./config/dev.config.js'); // Load config based on environment
 
 const paths = {
   scss: 'src/scss/**/*.scss',
   cssOutput: 'src/css',
 };
 
-// Compile SCSS into CSS
-gulp.task('scss', () => {
+// Helper function to clean the build folder (used in production)
+function cleanBuildFolder() {
+  const buildDir = path.resolve(__dirname, 'build');
+
+  if (fs.existsSync(buildDir)) {
+    fs.readdirSync(buildDir).forEach((file) => {
+      const currentPath = path.join(buildDir, file);
+      if (fs.lstatSync(currentPath).isDirectory()) {
+        fs.rmdirSync(currentPath, { recursive: true });
+      } else {
+        fs.unlinkSync(currentPath);
+      }
+    });
+  }
+
+  return Promise.resolve();
+}
+
+// Compile SCSS into CSS with different handling for dev/prod
+function compileSCSS() {
   return gulp
     .src('src/scss/main.scss')
-    // Remove the following lines to disable source maps:
-    // .pipe(sourcemaps.init())
+    .pipe(isProduction ? sass().on('error', sass.logError) : sourcemaps.init()) // Initialize sourcemaps for dev
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss([autoprefixer()]))
-    .pipe(cleanCSS())
-    // .pipe(sourcemaps.write('.'))
+    .pipe(isProduction ? cleanCSS() : sourcemaps.write('.')) // Minify in prod and use sourcemaps in dev
     .pipe(gulp.dest(paths.cssOutput));
-});
+}
 
-// Watch SCSS files for changes
-gulp.task('watch-scss', () => {
-  gulp.watch(paths.scss, gulp.series('scss'));
-});
+// Watch SCSS files for changes (for development mode)
+function watchSCSS() {
+  gulp.watch(paths.scss, compileSCSS);
+}
 
-// Task to start the Express server
-gulp.task('serve', (done) => {
+// Webpack build task (runs in both development and production)
+function buildWebpack() {
+  return gulp
+    .src('src/index.js')
+    .pipe(webpackStream(webpackConfig, webpack))
+    .pipe(gulp.dest('build'));
+}
+
+// Start server with nodemon
+function startDevServer() {
+  nodemon({
+    script: 'server.js',
+    ext: 'js',
+    env: { NODE_ENV: process.env.NODE_ENV || 'development' },
+  });
+}
+
+function startProdServer() {
   exec('node server.js', (err, stdout, stderr) => {
     console.log(stdout);
     console.error(stderr);
     done(err);
   });
-});
+}
 
-// Task to build the project using Webpack
-gulp.task('build', (done) => {
-  exec('npx webpack --mode production', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.error(stderr);
-    done(err);
-  });
-});
+// Gulp task for development mode
+gulp.task('dev', gulp.series(compileSCSS, gulp.parallel(buildWebpack, watchSCSS, startDevServer)));
 
-// Default task to serve and watch for changes
-gulp.task('default', gulp.parallel('serve', 'watch-scss'));
+// Gulp task for production mode
+gulp.task('prod', gulp.series(cleanBuildFolder, compileSCSS, buildWebpack, startProdServer));
+
+// Default task based on the environment
+gulp.task('default', gulp.series(isProduction ? 'prod' : 'dev'));
