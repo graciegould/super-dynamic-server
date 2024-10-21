@@ -1,0 +1,36 @@
+.super-dynamic-container {
+  @include absolute-full;
+  @include centered;
+  background-color: rgb(173, 237, 249);
+
+  .super-dynamic-info {
+    @include centered;
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(237, 176, 45);
+    width: 50%;
+    height: 50%;
+    background-color: lemonchiffon;
+    z-index: 1;
+  }
+
+  .cloud-img {
+    position: absolute;
+    width: calc(var(--window-inner-width) * 0.2);
+    height: auto;
+    animation: animate linear infinite;
+    animation-duration: 30s;
+  }
+}
+
+@keyframes animate {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

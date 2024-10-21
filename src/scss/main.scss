@@ -1,7 +1,11 @@
+html,
+body {
+  font-family: "Times New Roman", Times, serif;
+}
+
+@import "globals";
+@import "example";
+
 .app {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
+  @include absolute-full;
 }

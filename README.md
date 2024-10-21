@@ -1,6 +1,10 @@
 # Super Dynamic Server
 
-A reusable, super-dynamic server template built with Express, Webpack, Gulp, and other tools for hosting single-page applications with vanilla JavaScript, React, or other frameworks. It supports hot module reloading, SCSS compilation, and easy Node module imports on the front end.
+A reusable, super-dynamic server + client template built with Express, Webpack, Gulp, and other tools for hosting single-page applications with the flexibility to have multipage applications. It supports vanilla JavaScript, React,  or other frameworks. 
+
+## features 
+
+It supports hot module reloading, SCSS compilation, and easy Node module imports on the front end.
 
 # Create project with npx
 To use this template for your own project see (https://www.npmjs.com/package/create-dynamic-server) to run

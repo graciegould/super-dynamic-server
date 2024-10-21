@@ -1,0 +1,57 @@
+html,
+body {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.super-dynamic-container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgb(173, 237, 249);
+}
+.super-dynamic-container .super-dynamic-info {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgb(237, 176, 45);
+  width: 50%;
+  height: 50%;
+  background-color: lemonchiffon;
+  z-index: 1;
+}
+.super-dynamic-container .cloud-img {
+  position: absolute;
+  width: calc(var(--window-inner-width) * 0.2);
+  height: auto;
+  animation: animate linear infinite;
+  animation-duration: 30s;
+}
+
+@keyframes animate {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.app {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+/*# sourceMappingURL=main.css.map */
