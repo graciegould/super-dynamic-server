@@ -10,7 +10,7 @@ const nodemon = require('gulp-nodemon');
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
-
+const {exec} = require('child_process');
 dotenv.config();
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -65,7 +65,6 @@ function buildWebpack() {
     .pipe(gulp.dest('build'));
 }
 
-// Start server with nodemon
 function startDevServer(done) {
   nodemon({
     script: 'server.js -d',
@@ -89,7 +88,7 @@ function startDevServer(done) {
 }
 
 function startProdServer() {
-  exec('node server.js', (err, stdout, stderr) => {
+  exec('node server.js -p', (err, stdout, stderr) => {
     console.log(stdout);
     console.error(stderr);
     done(err);

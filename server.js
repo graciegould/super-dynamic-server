@@ -6,13 +6,20 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || 'http://localhost';
-const NODE_ENV = process.env.NODE_ENV || 'development';
+const MODE = process.env.NODE_ENV || 'development';
 
-if (NODE_ENV === 'development') {
+if(process.argv) {
+  let cmd = process.argv[2];
+  if(cmd.includes('-p')) {
+    process.env.NODE_ENV = 'production';
+  } else {
+    process.env.NODE_ENV = 'development';
+  }
+}
+if (MODE === 'development') {
   webpackConfig.entry.unshift('webpack-hot-middleware/client?reload=true');
   webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
   webpackConfig.devtool = 'source-map';
