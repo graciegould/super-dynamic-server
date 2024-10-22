@@ -13,6 +13,9 @@ const dotenv = require('dotenv');
 const {exec} = require('child_process');
 dotenv.config();
 
+const HOST = process.env.HOST || 'http://localhost';
+const PORT = process.env.PORT || 3000;
+
 const isProduction = process.env.NODE_ENV === 'production';
 const webpackConfig = isProduction
   ? require('./config/prod.config.js')
@@ -53,8 +56,9 @@ function compileSCSS() {
 }
 
 // Watch SCSS files for changes (for development mode)
-function watchSCSS() {
+function watchSCSS(done) {
   gulp.watch(paths.scss, compileSCSS);
+  done();
 }
 
 // Webpack build task (runs in both development and production)
@@ -63,6 +67,10 @@ function buildWebpack() {
     .src('src/index.js')
     .pipe(webpackStream(webpackConfig, webpack))
     .pipe(gulp.dest('build'));
+}
+
+function openBrowser(done) {
+  exec(`open ${HOST}:${PORT}`, done);
 }
 
 function startDevServer(done) {
@@ -79,6 +87,7 @@ function startDevServer(done) {
   .on('quit', () => {
     console.log('Nodemon quit');
     done();
+    process.exit();
   })
   .on('restart', (files) => {
     console.log('Nodemon restarted due to changes in: ', files);
@@ -96,10 +105,10 @@ function startProdServer() {
 }
 
 // Gulp task for development mode
-gulp.task('dev', gulp.series(compileSCSS, gulp.parallel(buildWebpack, watchSCSS, startDevServer)));
+gulp.task('dev', gulp.series(compileSCSS, gulp.parallel(buildWebpack, watchSCSS, startDevServer, openBrowser)));
 
 // Gulp task for production mode
-gulp.task('prod', gulp.series(cleanBuildFolder, compileSCSS, buildWebpack, startProdServer));
+gulp.task('prod', gulp.series(cleanBuildFolder, compileSCSS, buildWebpack, startProdServer, openBrowser));
 
 // Default task based on the environment
 gulp.task('default', gulp.series(isProduction ? 'prod' : 'dev'));

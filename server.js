@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || 'http://localhost';
 const MODE = process.env.NODE_ENV || 'development';
 
-if(process.argv) {
+if(process.argv && process.argv.length > 2) {
   let cmd = process.argv[2];
   if(cmd.includes('-p')) {
     process.env.NODE_ENV = 'production';
@@ -55,5 +55,5 @@ if (MODE === 'development') {
 }
 
 app.listen(PORT, () => {
-  console.log(`Server is running on ${HOST}:${PORT}`);
+  console.log(`Server is in ${MODE} mode -- running on ${HOST}:${PORT}`);
 });
