@@ -4,6 +4,18 @@ A reusable and flexible server template designed for an enhanced development wor
 
 Supports hosting single-page applications or multi-page applications — along with supporting vanilla JavaScript, React, or any other front-end JavaScript framework. Easily import Node modules on the front end for quick prototyping and deployment. 
 
+# Create project with npx [**create-dynamic-server**](https://www.npmjs.com/package/create-dynamic-server)
+
+see NPM registry for more information: [https://www.npmjs.com/package/create-dynamic-server](https://www.npmjs.com/package/create-dynamic-server) to run: 
+
+```
+npx create-dynamic-server my-app
+```
+or within a preferred folder
+```
+npx create-dynamic-server .
+```
+
 ## Features
 
 - [**Express**](https://www.npmjs.com/package/express) for serving the application.
@@ -13,14 +25,6 @@ Supports hosting single-page applications or multi-page applications — along w
 - [**Nodemon**](https://www.npmjs.com/package/nodemon) to automatically restart the Express server when changes are detected in the `server.js` file or anything in the `/api` directory — ensuring that the server stays up to date during development without manual restarts.
 - **Support for Vanilla JavaScript, React, and other preferred JS frameworks frameworks**
 - Easy Node module imports on the front end
-
-# Create project with `npx create-dynamic-server`
-
-To use this template for your own project see registry [**create-dynamic-server**](https://www.npmjs.com/package/create-dynamic-server) to run: 
-
-```
-npx create-dynamic-server my-app
-```
 
 ### Configure the environment you wish to run through the env by commenting out the one you wish to use — default is development
 
