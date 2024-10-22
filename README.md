@@ -115,8 +115,8 @@ You can modify `src/index.js` for your preferred framework:
 Using Vanilla JavaScript
 
 ```
-import './css/main.css';
-document.getElementById('root').innerHTML = '<h1>Hello Entry File!</h1>';
+import html from "./component.html";
+document.body.innerHTML = html;
 ```
 
 Using React
