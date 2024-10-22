@@ -66,12 +66,26 @@ function buildWebpack() {
 }
 
 // Start server with nodemon
-function startDevServer() {
+function startDevServer(done) {
   nodemon({
-    script: 'server.js',
+    script: 'server.js -d',
     ext: 'js',
     env: { NODE_ENV: process.env.NODE_ENV || 'development' },
+    watch: ['server.js', 'api/'], // Watch for changes in server.js and api folder
+    ignore: ['dist/', 'node_modules/'], // Ignore changes in dist and node_modules folders
+  })
+  .on('start', () => {
+    console.log('Nodemon started the server');
+  })
+  .on('quit', () => {
+    console.log('Nodemon quit');
+    done();
+  })
+  .on('restart', (files) => {
+    console.log('Nodemon restarted due to changes in: ', files);
   });
+
+  done();
 }
 
 function startProdServer() {
