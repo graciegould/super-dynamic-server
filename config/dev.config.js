@@ -29,6 +29,11 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        // Be able to import HTML files
+        test: /\.html$/,  
+        use: ['html-loader'],
+      },
     ],
   },
   plugins: [
