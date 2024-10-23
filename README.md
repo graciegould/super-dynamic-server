@@ -2,7 +2,7 @@
 
 A reusable and flexible server template designed for an enhanced development workflow. This template is built with Express, Webpack, nodemon, Gulp, and other essential tools to speed up your development process. 
 
-Supports hosting single-page applications or multi-page applications — along with supporting vanilla JavaScript, React, or any other front-end JavaScript framework. Easily import Node modules on the front end for quick prototyping and deployment. 
+Supports hosting single-page applications or multi-page applications — along with supporting vanilla JavaScript, React, or any other front-end JavaScript framework. 
 
 # Create project with npx [**create-dynamic-server**](https://www.npmjs.com/package/create-dynamic-server)
 
