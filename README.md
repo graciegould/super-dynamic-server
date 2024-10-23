@@ -108,9 +108,8 @@ super-dynamic-server/
 	└── package.json 
 ```
 
-### Customization
 
-### Changing Front-End Frameworks
+### customization
 
 You can easily swap out React for any other front-end framework (like Vue or Angular) by replacing the relevant dependencies and modifying `src/index.js` and `webpack.config.js` accordingly.
 
