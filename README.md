@@ -60,7 +60,7 @@ npm run start:dev
 npm run build
 ```
 
-### To build & run production you can uncomment prod configs and uncomment dev configs in your .env
+### for production
 
 ```bash
 # DEV CONFIG 
