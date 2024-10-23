@@ -18,10 +18,10 @@ npx create-dynamic-server .
 
 ## Features
 
-- [**Express**](https://www.npmjs.com/package/express) for serving the application.
+- [**Express**](https://www.npmjs.com/package/express) server
 - [**Webpack**](https://www.npmjs.com/package/webpack) for bundling JavaScript and CSS.
 - [**Gulp**](https://www.npmjs.com/package/gulp) for defining tasks for automating development and build workflows
-- [**Hot Module Replacement**](https://webpack.js.org/concepts/hot-module-replacement/) with Webpack for speedy development — live updates browser on edits to JS, SCSS, or CSS files in the `/src` directory without requiring a full page reload.
+- [**Hot Module Replacement**](https://webpack.js.org/concepts/hot-module-replacement/) with Webpack — live updates browser on edits to JS, SCSS, or CSS files in the `/src` directory without requiring a full page reload.
 - [**Nodemon**](https://www.npmjs.com/package/nodemon) to automatically restart the Express server when changes are detected in the `server.js` file or anything in the `/api` directory — ensuring that the server stays up to date during development without manual restarts.
 - **Support for Vanilla JavaScript, React, and other preferred JS frameworks frameworks**
 - Easy Node module imports on the front end
