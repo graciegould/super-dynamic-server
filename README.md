@@ -23,7 +23,7 @@ npx create-dynamic-server .
 - [**Gulp**](https://www.npmjs.com/package/gulp) for defining tasks for automating development and build workflows
 - [**Hot Module Replacement**](https://webpack.js.org/concepts/hot-module-replacement/) with Webpack — live updates browser on edits to JS, SCSS, or CSS files in the `/src` directory without requiring a full page reload.
 - [**Nodemon**](https://www.npmjs.com/package/nodemon) to automatically restart the Express server when changes are detected in the `server.js` file or anything in the `/api` directory — ensuring that the server stays up to date during development without manual restarts.
-- **Support for Vanilla JavaScript, React, and other preferred JS frameworks frameworks**
+- **Support for Vanilla JavaScript, React, and other preferred JS frameworks**
 - Easy Node module imports on the front end
 
 ### Configure the environment you wish to run through the env by commenting out the one you wish to use — default is development
